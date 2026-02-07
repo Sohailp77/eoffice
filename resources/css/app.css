@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+
+
+
+@theme {
+    --color-india-saffron: #FF9933;
+
+    /* Donezo Brand Colors */
+    --color-brand-dark: #0f392b;
+    --color-brand-primary: #155e46;
+    --color-brand-light: #34d399;
+    --color-brand-accent: #d1fae5;
+
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer components {
+    .glass-panel {
+        @apply bg-white backdrop-blur-xl border border-gray-200 shadow-sm;
+    }
+
+    .striped-bar {
+        background-image: repeating-linear-gradient(-45deg,
+                transparent,
+                transparent 4px,
+                #9ca3af 4px,
+                #9ca3af 5px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
