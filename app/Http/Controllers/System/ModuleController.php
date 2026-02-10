@@ -86,8 +86,11 @@ class ModuleController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:50', // Slug collision check is complex with parents, keeping simple for now
+            'slug' => ['required', 'string', 'max:50', 'unique:pgsql_app.modules,slug', 'regex:/^[a-z]+$/'], // Strict alphabetic only
         ]);
+
+        $validated['slug'] = Str::lower($validated['slug']);
+
 
         // 1. Register Sub-module in DB
         $subModuleId = DB::connection('pgsql_app')->table('modules')->insertGetId([

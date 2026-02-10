@@ -59,14 +59,8 @@ return new class extends Migration {
             $table->unique(['module_id', 'slug']);
         });
 
-        Schema::connection($connection)->create('module_level_routes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('module_level_id')->constrained('module_levels')->onDelete('cascade');
-            $table->string('route_name');
-            $table->timestamps();
-
-            $table->unique(['module_level_id', 'route_name']);
-        });
+        // Module Level Routes removed as unused
+        // Schema::connection($connection)->create('module_level_routes', ...);
 
         Schema::connection($connection)->create('user_module_levels', function (Blueprint $table) {
             $table->id();

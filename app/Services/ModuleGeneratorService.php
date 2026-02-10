@@ -60,25 +60,50 @@ class ModuleGeneratorService
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse(\$subModules as \$sub)
-            <a href="{{ route('{$slug}.' . \$sub->slug . '.index') }}" 
-               class="group block p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-brand-primary/50 dark:hover:border-brand-primary/50 transition-all duration-300 shadow-sm hover:shadow-md relative overflow-hidden">
-                
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-primary transition-colors relative z-10">
-                    {{ \$sub->name }}
-                </h3>
-                <p class="text-gray-500 dark:text-gray-400 text-sm relative z-10">
-                    Manage {{ \$sub->name }} records
-                </p>
-                
-                <div class="mt-4 flex items-center text-sm text-brand-primary font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                    <span>Access Module</span>
-                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
+            @php
+                \$hasAccess = auth()->user()->hasModuleAccess(\$sub->slug, 1);
+            @endphp
+
+            @if(\$hasAccess)
+                <a href="{{ route('{$slug}.' . \$sub->slug . '.index') }}" 
+                   class="group block p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-brand-primary/50 dark:hover:border-brand-primary/50 transition-all duration-300 shadow-sm hover:shadow-md relative overflow-hidden">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-primary transition-colors relative z-10">
+                        {{ \$sub->name }}
+                    </h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm relative z-10">
+                        Manage {{ \$sub->name }} records
+                    </p>
+                    
+                    <div class="mt-4 flex items-center text-sm text-brand-primary font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                        <span>Access Module</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+            @else
+                <!-- Locked Module -->
+                <div class="group block p-6 bg-gray-50 dark:bg-gray-900/50 rounded-xl border border-gray-200 dark:border-gray-800 relative overflow-hidden opacity-75 cursor-not-allowed">
+                    <div class="absolute inset-0 bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-[1px]"></div>
+                    
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-500 dark:text-gray-500">
+                                {{ \$sub->name }}
+                            </h3>
+                            <svg class="w-5 h-5 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-400 dark:text-gray-600 text-sm">
+                            Access Restricted
+                        </p>
+                    </div>
                 </div>
-            </a>
+            @endif
         @empty
             <div class="col-span-full">
                 <div class="text-center py-12 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
@@ -223,6 +248,10 @@ class {$controllerName} extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->hasModuleAccess('{$subSlug}', 1)) {
+            abort(403, 'Unauthorized module access.');
+        }
+
         \${$subSlug} = {$modelName}::latest()->paginate(10);
         
         \$crumbs = [
@@ -268,6 +297,10 @@ class {$controllerName} extends Controller
 
     public function show({$modelName} \${$varName})
     {
+        if (!auth()->user()->hasModuleAccess('{$subSlug}', 1)) {
+            abort(403, 'Unauthorized module access.');
+        }
+
         \$crumbs = [
             ['label' => 'Dashboard', 'url' => route('dashboard')], // path of Main dashboard
             ['label' => '{$parentTitle}', 'url' => route('{$parentSlug}.index')],

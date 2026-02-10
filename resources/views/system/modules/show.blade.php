@@ -91,8 +91,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <p>Creates DB entry and appends <code>Route::resource('slug', ...)</code> to
-                            <code>web.php</code>.
+                        <p>Creates DB entry. Run <code>php artisan migrate</code> to create default table of sub-module.
                         </p>
                     </div>
                 </div>

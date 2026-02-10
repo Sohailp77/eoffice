@@ -20,18 +20,8 @@ return new class extends Migration {
         });
 
         // Create granular permissions table for sub-modules
-        Schema::connection('pgsql_app')->create('sub_module_permissions', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('sub_module_id'); // References modules.id
-            $table->unsignedBigInteger('module_level_id'); // Browse/Read/Write/Manage
-            $table->timestamps();
-
-            // Constraints
-            $table->unique(['user_id', 'sub_module_id']);
-            $table->foreign('sub_module_id')->references('id')->on('modules')->onDelete('cascade');
-            $table->foreign('module_level_id')->references('id')->on('module_levels')->onDelete('cascade');
-        });
+        // Sub-module permissions removed as unused (using user_module_levels)
+        // Schema::connection('pgsql_app')->create('sub_module_permissions', ...);
     }
 
     /**

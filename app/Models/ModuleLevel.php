@@ -14,8 +14,9 @@ class ModuleLevel extends Model
         return $this->belongsTo(Module::class);
     }
 
-    public function routes()
+    public function levels()
     {
-        return $this->hasMany(ModuleLevelRoute::class);
+        return $this->hasMany(ModuleLevel::class, 'parent_id');
     }
+
 }

@@ -33,7 +33,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="text-4xl font-bold mb-6">{{ $totalModules }}</div>
+            <div class="text-4xl font-bold mb-6">{{ $totalParentModules }}</div>
             <div class="flex items-center gap-2 text-xs opacity-80">
                 <span class="bg-brand-light/30 px-1.5 py-0.5 rounded text-brand-light font-bold">Inst</span>
                 <span>Installed Modules</span>
@@ -55,7 +55,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="text-4xl font-bold mb-6 text-gray-900 dark:text-white">{{ $accessibleModules->count() }}</div>
+            <div class="text-4xl font-bold mb-6 text-gray-900 dark:text-white">{{ $totalUsersParentModules }}</div>
             <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                 <span
                     class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-gray-600 dark:text-gray-300 font-bold border dark:border-gray-600">Active</span>
@@ -146,24 +146,6 @@
                 </div>
             </div>
 
-            <!-- Activity Mockup (Kept for UI balance) -->
-            <!-- <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 h-64 flex flex-col">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-bold text-gray-900">System Traffic</h3>
-                </div>
-                <div class="flex-1 flex items-end justify-between gap-2 px-2">
-                    @foreach(['S', 'M', 'T', 'W', 'T', 'F', 'S'] as $day)
-                        <div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
-                            <div
-                                class="w-full rounded-t-lg transition-all duration-300 
-                                    {{ $day === 'W' ? 'bg-brand-dark h-28' : ($day === 'T' ? 'bg-brand-light h-20' : 'bg-gray-200 h-12 striped-bar opacity-50 hover:opacity-100') }}">
-                            </div>
-                            <span
-                                class="text-xs text-gray-400 group-hover:text-gray-900 transition-colors">{{ $day }}</span>
-                        </div>
-                    @endforeach
-                </div>
-            </div> -->
         </div>
 
         <!-- Middle Column (Your Apps) - Moved here for better visibility as primary action area -->
@@ -171,11 +153,10 @@
             <div
                 class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 text-xl">My Modules</h3>
-                    <!-- <button class="text-xs border px-3 py-1.5 rounded-full hover:bg-gray-50">View All</button> -->
+                    <h3 class="font-bold text-gray-900 dark:text-gray-100 text-xl">My Parent Modules</h3>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    @forelse($accessibleModules as $module)
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    @forelse($accesibleparentmodule as $module)
                         <a href="{{ $module['route'] }}" wire:navigate
                             class="flex items-start gap-4 p-4 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-brand-primary/30 hover:bg-brand-accent/30 dark:hover:bg-brand-primary/20 transition-all group">
                             <div
@@ -191,17 +172,18 @@
                                     class="text-base font-bold text-gray-900 dark:text-gray-200 group-hover:text-brand-dark dark:group-hover:text-brand-light">
                                     {{ $module['name'] }}
                                 </h4>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
+                                <p class="text-xs text-brand-primary dark:text-brand-light font-medium mt-1">
                                     {{ $module['description'] }}
                                 </p>
                             </div>
                         </a>
                     @empty
-                        <div class="col-span-full py-10 text-center text-gray-400">
-                            No modules assigned. Contact administrator.
+                        <div class="col-span-full py-4 text-center text-gray-400 text-sm italic">
+                            No parent modules assigned.
                         </div>
                     @endforelse
                 </div>
+
             </div>
 
             <!-- Quick Actions / Promo -->

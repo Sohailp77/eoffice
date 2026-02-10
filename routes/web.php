@@ -38,10 +38,11 @@ Route::middleware(['auth'])->group(function () {
         // Fetch modules the user has access to, eager loading module and level
         $userModuleLevels = $user->moduleLevels()->with(['module', 'level'])->get();
 
-        $accessibleModules = $userModuleLevels->map(function ($uml) {
+        // Format helper
+        $formatModule = function ($uml) {
             $slug = $uml->module->slug;
-            // Assume entry route convention: {slug}.index
             $routeName = $slug . '.index';
+            // Check if route exists, if not fallback
             $url = \Illuminate\Support\Facades\Route::has($routeName) ? route($routeName) : '#';
 
             // Fallback: checks if a prefix route exists or just use slug as relative url
@@ -51,34 +52,51 @@ Route::middleware(['auth'])->group(function () {
 
             return [
                 'name' => $uml->module->name,
-                'description' => "Access Level: " . $uml->level->name, // Showing level as description
-                'route' => $url, // View uses 'route' or 'url'
+                'description' => "Access Level: " . $uml->level->name,
+                'route' => $url,
                 'slug' => $slug,
-                'active' => $uml->module->is_active
+                'active' => $uml->module->is_active,
+                'parent_id' => $uml->module->parent_id
             ];
-        })->filter(function ($m) {
-            return $m['active'];
-        });
+        };
+
+        // All Accessible Modules (formatted)
+        $accessibleModules = $userModuleLevels->map($formatModule)->filter(fn($m) => $m['active']);
+
+        // Parent Modules (formatted)
+        $formattedParentModules = $userModuleLevels
+            ->filter(fn($uml) => $uml->module && $uml->module->parent_id === null && $uml->module->is_active)
+            ->map($formatModule)
+            ->values();
+
+        // Sub Modules (formatted)
+        $formattedSubModules = $userModuleLevels
+            ->filter(fn($uml) => $uml->module && $uml->module->parent_id !== null && $uml->module->is_active)
+            ->map($formatModule)
+            ->values();
+
 
         $totalUsers = User::count();
-        $totalModules = Module::count();
         $recentUsers = User::orderBy('dt_of_creation', 'desc')->take(5)->get(); // Assuming 'id' as proxy for 'latest' if timestamps not available or just to be safe
 
         return view('dashboard', [
             'accessibleModules' => $accessibleModules,
+            //accesible parent modules (formatted)
+            'accesibleparentmodule' => $formattedParentModules,
+            //accesible sub modules (formatted)
+            'accesiblesubmodule' => $formattedSubModules,
             'totalUsers' => $totalUsers,
-            'totalModules' => $totalModules,
+            //total parent modules
+            'totalParentModules' => Module::whereNull('parent_id')->count(),
+            //total sub modules
+            'totalSubModules' => Module::whereNotNull('parent_id')->count(),
+            //total users parent modules access count
+            'totalUsersParentModules' => $formattedParentModules->count(),
+            //total users sub modules access count
+            'totalUsersSubModules' => $formattedSubModules->count(),
             'recentUsers' => $recentUsers
         ]);
     })->name('dashboard');
-
-    Route::get('/reports', function () {
-        return view('reports');
-    })->middleware('module:reports-module')->name('reports');
-
-    Route::get('/settings', function () {
-        return view('settings');
-    })->middleware('module:settings-module')->name('settings');
 
     // User Management Routes (Admin Only)
     Route::get('/admin/users', [UserManagementController::class, 'index'])
