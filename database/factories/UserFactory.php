@@ -24,11 +24,16 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'userid' => fake()->unique()->numberBetween(1000, 30000),
+            'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'full_name' => fake()->name(),
+            // Simulating legacy MD5 password for testing
+            'user_password' => md5('password'),
+            'mobile' => fake()->phoneNumber(),
+            'display' => fake()->randomElement(['Yes', 'No']),
+            'ip' => fake()->ipv4(),
+            'dt_of_creation' => now(),
         ];
     }
 
@@ -37,7 +42,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

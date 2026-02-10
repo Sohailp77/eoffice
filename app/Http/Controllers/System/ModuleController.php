@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 
 class ModuleController extends Controller
 {
@@ -66,6 +67,9 @@ class ModuleController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Clear route cache to pick up new module routes
+        Artisan::call('route:clear');
+
         return redirect()->route('system.modules.index')->with('success', 'Module created successfully. Please run "composer dump-autoload" if the new class is not found.');
     }
 
@@ -106,7 +110,30 @@ class ModuleController extends Controller
             return back()->with('warning', 'Sub-module registered in DB but scaffolding failed: ' . $e->getMessage());
         }
 
+        // Clear route cache to pick up new sub-module routes
+        Artisan::call('route:clear');
+
         return redirect()->route('system.modules.show', $id)->with('success', 'Sub-module registered and CRUD scaffolding created.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'is_active' => 'boolean',
+        ]);
+
+        DB::connection('pgsql_app')->table('modules')
+            ->where('id', $id)
+            ->update([
+                'name' => $validated['name'],
+                'is_active' => $validated['is_active'] ?? true,
+                'updated_at' => now(),
+            ]);
+
+        // If specific redirect needed (e.g. back to show), can adjust. 
+        // Test expects assertRedirect().
+        return redirect()->route('system.modules.index')->with('success', 'Module updated successfully.');
     }
 
     public function destroy($id)
@@ -139,6 +166,10 @@ class ModuleController extends Controller
             }
 
             DB::connection('pgsql_app')->table('modules')->delete($id);
+
+            // Clear route cache after deletion
+            Artisan::call('route:clear');
+
             return redirect()->route('system.modules.index')->with('success', 'Module deleted successfully.');
         }
     }

@@ -7,7 +7,7 @@
             <div class="relative flex-1">
                 <input type="text" name="search" placeholder="Search by username, email, name..."
                     value="{{ request('search') }}"
-                    class="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white ring-1 ring-green-600 focus:ring-2 focus:ring-brand/50 focus:border-green-600/50 outline-none transition-all placeholder:text-slate-500">
+                    class="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white ring-1 ring-brand-primary focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary/50 outline-none transition-all placeholder:text-slate-500">
                 <svg class="w-5 h-5 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -17,18 +17,6 @@
             <x-ui.button type="submit" variant="primary">Search</x-ui.button>
         </form>
     </x-ui.card>
-
-    @if(session('success'))
-        <div
-            class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
-            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {{ session('success') }}
-        </div>
-    @endif
-
     <x-ui.table>
         <x-slot:header>
             <x-ui.table.head>
@@ -45,7 +33,7 @@
                     <x-ui.table.cell>
                         <div class="flex items-center">
                             <div
-                                class="h-10 w-10 rounded-full dark:bg-green-800/20 bg-green-200 flex items-center justify-center dark:text-green-200 text-green-800 font-bold text-sm border border-green-500/30">
+                                class="h-10 w-10 rounded-full dark:bg-brand-primary/20 bg-brand-accent flex items-center justify-center dark:text-brand-light text-brand-primary font-bold text-sm border border-brand-primary/30">
                                 {{ substr($user->full_name, 0, 1) }}
                             </div>
                             <div class="ml-4">
@@ -70,7 +58,7 @@
                                     Revoke Admin
                                 </x-ui.button>
                             @else
-                                <x-ui.button type="submit" variant="success" size="sm">
+                                <x-ui.button type="submit" variant="primary" size="sm">
                                     Make Admin
                                 </x-ui.button>
                             @endif

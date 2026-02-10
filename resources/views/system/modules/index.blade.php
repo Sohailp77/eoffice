@@ -29,7 +29,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <span
-                                class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-600 dark:bg-green-500/20 dark:text-green-400 border border-green-500/20">
+                                class="px-3 py-1 rounded-full text-xs font-medium bg-brand-primary/10 text-brand-primary dark:bg-brand-primary/20 dark:text-brand-light border border-brand-primary/20">
                                 Active
                             </span>
                             <form action="{{ route('system.modules.destroy', $module->id) }}" method="POST"

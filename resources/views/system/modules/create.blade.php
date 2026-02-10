@@ -8,13 +8,13 @@
             <div class="mb-6">
                 <label class="block text-sm font-bold text-slate-400 uppercase mb-2">Module Name</label>
                 <input type="text" name="name" placeholder="e.g. Inventory Management" required
-                    class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 ring-1 ring-green-600 focus:ring-2 focus:ring-brand/50 focus:border-green-600/50 outline-none transition-all shadow-sm" />
+                    class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 ring-1 ring-brand-primary focus:ring-2 focus:ring-brand/50 focus:border-brand-primary/50 outline-none transition-all shadow-sm" />
             </div>
 
             <div class="mb-6">
                 <label class="block text-sm font-bold text-slate-400 uppercase mb-2">Unique Slug</label>
                 <input type="text" name="slug" placeholder="e.g. inventory" required
-                    class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 ring-1 ring-green-600 focus:ring-2 focus:ring-brand/50 focus:border-green-600/50 outline-none transition-all shadow-sm" />
+                    class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 ring-1 ring-brand-primary focus:ring-2 focus:ring-brand/50 focus:border-brand-primary/50 outline-none transition-all shadow-sm" />
                 <p class="text-xs text-slate-500 mt-2">This will be used for URLs and directory names.</p>
             </div>
 
@@ -24,7 +24,7 @@
                     Cancel
                 </a>
                 <button type="submit"
-                    class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                    class="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-dark transition">
                     Create Module
                 </button>
             </div>

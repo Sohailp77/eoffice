@@ -1,7 +1,8 @@
-@props(['title', 'value', 'icon', 'color' => 'indigo'])
+@props(['title', 'value', 'icon', 'color' => 'brand'])
 
 @php
     $gradients = [
+        'brand' => 'from-brand-primary to-brand-light',
         'indigo' => 'from-indigo-500 to-purple-500',
         'emerald' => 'from-emerald-500 to-teal-500',
         'amber' => 'from-amber-400 to-orange-500',
@@ -13,7 +14,7 @@
         'navy' => 'from-india-blue to-indigo-900',
     ];
 
-    $gradient = $gradients[$color] ?? $gradients['indigo'];
+    $gradient = $gradients[$color] ?? $gradients['brand'];
 @endphp
 
 <x-ui.card class="flex items-center gap-5 p-6 relative overflow-hidden group">
@@ -23,7 +24,7 @@
     </div>
 
     <div
-        class="relative w-12 h-12 rounded-xl bg-gradient-to-br {{ $gradient }} flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
+        class="relative w-12 h-12 rounded-xl bg-gradient-to-br {{ $gradient }} flex items-center justify-center text-white shadow-lg shadow-brand-primary/20">
         {{ $icon }}
     </div>
     <div class="relative">

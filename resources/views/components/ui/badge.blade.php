@@ -8,6 +8,7 @@
         'warning' => 'bg-amber-500/20 text-amber-300 border border-amber-500/30',
         'danger' => 'bg-rose-500/20 text-rose-300 border border-rose-500/30',
         'purple' => 'bg-purple-500/20 text-purple-300 border border-purple-500/30',
+        'primary' => 'bg-brand-primary/20 text-brand-primary border border-brand-primary/30',
     ];
 
     $classes = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium backdrop-blur-md shadow-sm ' . ($colors[$color] ?? $colors['neutral']);

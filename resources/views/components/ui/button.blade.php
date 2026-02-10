@@ -4,7 +4,7 @@
     $baseClasses = 'inline-flex items-center justify-center font-bold tracking-wide transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 active:translate-y-0';
 
     $variants = [
-        'primary' => 'bg-green-600 text-white shadow-lg shadow-green-900/10 hover:bg-green-700 hover:shadow-green-900/20 border border-transparent',
+        'primary' => 'bg-brand-primary text-white shadow-lg shadow-brand-primary/10 hover:bg-brand-primary/90 hover:shadow-brand-primary/20 border border-transparent',
         'secondary' => 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-sm',
         'danger' => 'bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-900/10 border border-transparent',
         'success' => 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-900/10 border border-transparent',

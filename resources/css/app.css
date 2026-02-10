@@ -3,19 +3,67 @@
 @config "../../tailwind.config.js";
 
 
+@layer base {
 
+    /* DEFAULT THEME (Emerald/Growth) - Professional & Clean */
+    :root {
+        --color-brand-dark: #0f392b;
+        --color-brand-primary: #155e46;
+        --color-brand-light: #34d399;
+        --color-brand-accent: #d1fae5;
+    }
+
+    /* ROYAL THEME (Gold/Premium) - Executive & High-end */
+    [data-theme="royal"] {
+        --color-brand-dark: #5c4300;
+        --color-brand-primary: #c9a227;
+        --color-brand-light: #f5d76e;
+        --color-brand-accent: #fff3c4;
+    }
+
+    /* OCEAN THEME (Sapphire/Trust) - Corporate & Secure */
+    [data-theme="ocean"] {
+        --color-brand-dark: #092568;
+        /* Slate 900 */
+        --color-brand-primary: #1e40af;
+        /* Blue 800 */
+        --color-brand-light: #60a5fa;
+        /* Blue 400 */
+        --color-brand-accent: #dbeafe;
+        /* Blue 100 */
+    }
+
+    /* BERRY THEME (Amethyst/Creative) - Modern & Ethereal */
+    [data-theme="berry"] {
+        --color-brand-dark: #4a044e;
+        /* Fuchsia 950 */
+        --color-brand-primary: #86198f;
+        /* Fuchsia 700 */
+        --color-brand-light: #e879f9;
+        /* Fuchsia 400 */
+        --color-brand-accent: #fae8ff;
+        /* Fuchsia 100 */
+    }
+}
 
 @theme {
     --color-india-saffron: #FF9933;
 
-    /* Donezo Brand Colors */
-    --color-brand-dark: #0f392b;
-    --color-brand-primary: #155e46;
-    --color-brand-light: #34d399;
-    --color-brand-accent: #d1fae5;
+    /* Semantic Mappings linked to CSS Variables */
+    --color-brand-dark: var(--color-brand-dark);
+    --color-brand-primary: var(--color-brand-primary);
+    --color-brand-light: var(--color-brand-light);
+    --color-brand-accent: var(--color-brand-accent);
+
+    /* Common Alias */
+    --color-accent: var(--color-brand-primary);
+    /* For gold/light themes, dark text might be better, but white is safer for primary buttons.
+       We can stick to white for now for button text safety. */
+    --color-accent-foreground: #ffffff;
 
     --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
+
 
 @layer components {
     .glass-panel {

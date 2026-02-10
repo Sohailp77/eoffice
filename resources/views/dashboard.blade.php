@@ -11,12 +11,12 @@
         <div class="flex gap-3">
             @if(auth()->user()->isAdmin())
                 <a href="{{ route('system.modules.create') }}"
-                    class="px-5 py-2.5 bg-brand-dark text-white rounded-full text-sm font-semibold hover:bg-green-900 flex items-center gap-2">
+                    class="px-5 py-2.5 bg-brand-primary text-white rounded-full text-sm font-semibold hover:bg-brand-dark flex items-center gap-2">
                     <span>+</span> New Module
                 </a>
             @endif
         </div>
-    </div> 
+    </div>
 
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -35,7 +35,7 @@
             </div>
             <div class="text-4xl font-bold mb-6">{{ $totalModules }}</div>
             <div class="flex items-center gap-2 text-xs opacity-80">
-                <span class="bg-green-500/30 px-1.5 py-0.5 rounded text-green-300 font-bold">Inst</span>
+                <span class="bg-brand-light/30 px-1.5 py-0.5 rounded text-brand-light font-bold">Inst</span>
                 <span>Installed Modules</span>
             </div>
         </div>
@@ -93,7 +93,7 @@
                 <span class="text-sm font-bold text-gray-800 dark:text-gray-200">System Status</span>
                 <div
                     class="w-8 h-8 border border-gray-200 dark:border-gray-600 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
+                    <svg class="w-4 h-4 text-brand-primary dark:text-brand-light" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -102,7 +102,7 @@
             </div>
             <div class="text-4xl font-bold mb-6 text-gray-900 dark:text-white">OK</div>
             <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                <span class="text-green-600 dark:text-green-400 font-medium">All systems operational</span>
+                <span class="text-brand-primary dark:text-brand-light font-medium">All systems operational</span>
             </div>
         </div>
     </div>
@@ -140,7 +140,7 @@
                                 </p>
                             </div>
                             <span
-                                class="text-[10px] bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-1 rounded">Active</span>
+                                class="text-[10px] bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-light px-2 py-1 rounded">Active</span>
                         </div>
                     @endforeach
                 </div>

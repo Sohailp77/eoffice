@@ -20,7 +20,14 @@ class ModuleServiceProvider extends ServiceProvider
 
             foreach ($modules as $module) {
                 $moduleName = basename($module); // e.g., Library
-                $providerClass = "App\\Modules\\{$moduleName}\\Providers\\{$moduleName}ServiceProvider";
+                $providerName = "{$moduleName}ServiceProvider";
+                $providerClass = "App\\Modules\\{$moduleName}\\Providers\\{$providerName}";
+
+                // Manually require the file if it exists, to bypass Composer classmap caching issues on new files
+                $providerPath = "{$module}/Providers/{$providerName}.php";
+                if (File::exists($providerPath)) {
+                    require_once $providerPath;
+                }
 
                 if (class_exists($providerClass)) {
                     $this->app->register($providerClass);

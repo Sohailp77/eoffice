@@ -26,7 +26,7 @@ class AdminAssignmentSeeder extends Seeder
                 ->exists();
 
             if (!$exists) {
-                DB::connection('sqlite')->table('role_user')->insert([
+                DB::connection('pgsql_app')->table('role_user')->insert([
                     'user_id' => $userId,
                     'role_id' => $adminRole->id,
                 ]);

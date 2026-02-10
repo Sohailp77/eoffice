@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 class ModuleGeneratorService
 {
@@ -45,6 +46,8 @@ class ModuleGeneratorService
 
         // 6. Create Parent Index View
         $this->createModuleIndexView($modulePath, $name, $slug);
+
+        Artisan::call('route:clear');
 
         return $modulePath;
     }
@@ -173,6 +176,8 @@ PHP;
 
         // 5. Route
         $this->appendSubModuleRoute($parentSlug, $subSlug, $controllerName);
+
+        Artisan::call('route:clear');
     }
 
     protected function createSubModuleModel($path, $namespace, $modelName, $subSlug)
@@ -407,7 +412,7 @@ HTML
             <div class="mb-6">
                 <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-2">Name</label>
                 <input type="text" name="name" 
-                    class="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-all shadow-sm" 
+                    class="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none ring-1 ring-brand-primary focus:ring-2 focus:ring-brand-primary/50 transition-all shadow-sm" 
                     required>
             </div>
             
@@ -443,7 +448,7 @@ HTML
             <div class="mb-6">
                 <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-2">Name</label>
                 <input type="text" name="name" value="{{ \${$subSlug}->name }}" 
-                    class="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-all shadow-sm" 
+                    class="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none ring-1 ring-brand-primary focus:ring-2 focus:ring-brand-primary/50 transition-all shadow-sm" 
                     required>
             </div>
             
@@ -537,6 +542,8 @@ PHP;
         if (File::exists($modulePath)) {
             File::deleteDirectory($modulePath);
         }
+
+        Artisan::call('route:clear');
     }
 
     public function deleteSubModule(string $parentSlug, string $subSlug)
@@ -585,6 +592,8 @@ PHP;
         // 6. Drop Table
         $table = Str::snake($parentSlug) . '_' . Str::snake($subSlug);
         Schema::dropIfExists($table);
+
+        Artisan::call('route:clear');
     }
 
     protected function removeSubModuleRoute(string $parentSlug, string $subSlug)

@@ -95,7 +95,7 @@
                                                 {{ $module->name }}
                                             </label>
                                             @if($hasAccess)
-                                                <span class="px-2.5 py-0.5 bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400 text-xs font-semibold rounded-full border border-green-200 dark:border-green-500/20">
+                                                <span class="px-2.5 py-0.5 bg-brand-primary/10 text-brand-primary dark:bg-brand-primary/20 dark:text-brand-light text-xs font-semibold rounded-full border border-brand-primary/20 dark:border-brand-primary/20">
                                                     Assigned
                                                 </span>
                                             @endif

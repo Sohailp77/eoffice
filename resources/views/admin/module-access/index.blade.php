@@ -15,7 +15,7 @@
             <div class="flex-1">
                 <input type="text" name="search" value="{{ request('search') }}"
                     placeholder="Search by username, email, or name..."
-                    class="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none ring-1 ring-green-600 focus:ring-2 focus:ring-brand/50 focus:border-green-600/50 outline-none transition-all shadow-sm" />
+                    class="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none ring-1 ring-brand-primary focus:ring-2 focus:ring-brand/50 focus:border-brand-primary/50 outline-none transition-all shadow-sm" />
             </div>
             <x-ui.button type="submit" variant="primary">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,7 +76,7 @@
                             <div class="flex flex-wrap gap-2">
                                 @foreach($user->moduleAccess as $access)
                                     <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-500/20 dark:text-green-300 border border-green-200 dark:border-green-500/20">
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-primary/10 text-brand-primary dark:bg-brand-primary/20 dark:text-brand-light border border-brand-primary/20 dark:border-brand-primary/20">
                                         {{ $access->module->name }}
                                         <span class="ml-1 opacity-60">({{ $access->level->name }})</span>
                                     </span>

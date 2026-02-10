@@ -2,7 +2,7 @@
 
 @php
     $baseClasses = $header
-        ? 'px-6 py-4 text-xs font-bold text-indigo-200 uppercase tracking-wider'
+        ? 'px-6 py-4 text-xs font-bold text-brand-light uppercase tracking-wider'
         : 'px-6 py-4 whitespace-nowrap text-sm text-slate-300 group-hover:text-white transition-colors';
 
     $alignClasses = match ($align) {

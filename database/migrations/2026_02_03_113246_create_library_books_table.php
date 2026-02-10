@@ -10,6 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        Schema::connection('pgsql_app')->dropIfExists('books');
         Schema::connection('pgsql_app')->create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');

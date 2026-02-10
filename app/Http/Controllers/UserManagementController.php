@@ -9,6 +9,8 @@ class UserManagementController extends Controller
 {
     public function index(Request $request)
     {
+        abort_unless(auth()->user()->isAdmin(), 403);
+
         $query = User::with('systemRoles');
 
         if ($request->has('search')) {
@@ -31,6 +33,8 @@ class UserManagementController extends Controller
 
     public function toggleAdmin(Request $request, $id)
     {
+        abort_unless(auth()->user()->isAdmin(), 403);
+
         $user = User::findOrFail($id);
 
         // Get admin system role (not regular role)

@@ -15,6 +15,8 @@ return new class extends Migration {
         // Drop existing tables if they exist to ensure clean slate
         Schema::connection($connection)->dropIfExists('user_module_levels');
         Schema::connection($connection)->dropIfExists('module_level_routes');
+        // Drop sub_module_permissions dependent on module_levels
+        Schema::connection($connection)->dropIfExists('sub_module_permissions');
         Schema::connection($connection)->dropIfExists('module_levels');
         // Drop module_permission if it exists from previous architecture to avoid FK issues when dropping modules
         Schema::connection($connection)->dropIfExists('module_permission');

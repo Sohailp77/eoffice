@@ -21,6 +21,9 @@
                 </div>
 
                 <div class="flex items-center gap-6 ml-auto">
+                    <!-- Theme Selector -->
+                    <x-ui.theme-selector />
+
                     <!-- Theme Toggle -->
                     <button id="theme-toggle"
                         class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 bg-white transition-colors dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
@@ -40,7 +43,7 @@
                         </svg>
                     </button>
 
-                    <div class="flex gap-2">
+                    <!-- <div class="flex gap-2">
                         <button
                             class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 bg-white">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +52,7 @@
                                 </path>
                             </svg>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
 
                 <script>
@@ -98,12 +101,24 @@
                     document.addEventListener('livewire:navigated', initializeThemeToggle);
                 </script>
 
+                <script>
+                    // Immediate Theme Initialization to prevent flash
+                    (function () {
+                        const theme = localStorage.getItem('theme-color');
+                        if (theme && theme !== 'default') {
+                            document.documentElement.setAttribute('data-theme', theme);
+                        }
+                    })();
+                </script>
+
             </header>
 
             <!-- Scrollable Content -->
             <div class="flex-1 overflow-y-auto p-8 no-scrollbar">
                 {{ $slot }}
             </div>
+            <x-ui.error />
+            <x-ui.success />
         </main>
     </div>
 </x-layout>

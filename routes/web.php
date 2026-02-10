@@ -26,19 +26,7 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Dev route to simulate login (since we don't have specific login UI wired to existing users yet)
-// Keeping it for debugging if needed, but the main flow is now the login screen.
-Route::get('/dev/login/{id}', function ($id) {
-    // In a real scenario, this would be a proper auth flow. 
-    // We assume the user exists in the PG database.
-    // If PG is not reachable this will fail.
-    try {
-        Auth::loginUsingId($id);
-        return redirect('/dashboard');
-    } catch (\Exception $e) {
-        return "Could not login user $id. PGSQL might be unreachable. Error: " . $e->getMessage();
-    }
-});
+
 
 
 

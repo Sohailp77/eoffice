@@ -28,7 +28,7 @@
                     class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-4 last:border-0 last:pb-0">
                     <span class="text-gray-500 dark:text-gray-400 font-medium">Status</span>
                     <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-500/20 dark:text-green-400 border border-green-200 dark:border-green-500/20">
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-primary/10 text-brand-primary dark:bg-brand-primary/20 dark:text-brand-light border border-brand-primary/20">
                         Active
                     </span>
                 </div>
@@ -86,7 +86,7 @@
                         </x-ui.button>
                     </div>
                     <div
-                        class="flex items-start gap-2 text-xs text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-2 rounded text-blue-800 dark:text-blue-300">
+                        class="flex items-start gap-2 text-xs text-gray-500 dark:text-gray-400 bg-brand-primary/5 dark:bg-brand-primary/10 p-2 rounded text-brand-primary dark:text-brand-light">
                         <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
