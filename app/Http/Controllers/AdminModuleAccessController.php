@@ -8,6 +8,7 @@ use App\Models\ModuleLevel;
 use App\Models\UserModuleLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\GuestUser;
 
 class AdminModuleAccessController extends Controller
 {
@@ -28,7 +29,9 @@ class AdminModuleAccessController extends Controller
             });
         }
 
+        //Auth User + Guest User
         $users = $query->orderBy('userid')->paginate(20);
+        $users->appends(request()->query());
 
         // Load module access for each user
         foreach ($users as $user) {
@@ -38,12 +41,13 @@ class AdminModuleAccessController extends Controller
         return view('admin.module-access.index', compact('users'));
     }
 
-    /**
-     * Show form to manage a specific user's module access
-     */
     public function edit($userId)
     {
-        $user = User::findOrFail($userId);
+        if ($userId >= 1000000000) {
+            $user = \App\Models\GuestUser::findOrFail($userId);
+        } else {
+            $user = User::findOrFail($userId);
+        }
 
         // Get all available modules
         $modules = Module::where('is_active', true)
@@ -63,7 +67,11 @@ class AdminModuleAccessController extends Controller
 
     public function update(Request $request, $userId)
     {
-        $user = User::findOrFail($userId);
+        if ($userId >= 1000000000) {
+            $user = \App\Models\GuestUser::findOrFail($userId);
+        } else {
+            $user = User::findOrFail($userId);
+        }
 
         $request->validate([
             'modules' => 'nullable|array',

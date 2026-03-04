@@ -18,9 +18,17 @@ Route::get("/", function () {
 Route::get('/login', function () {
     return redirect()->route('login');
 });
+
 Route::get('welcome', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/reset-password', function () {
+    return view('auth.resetpassword');
+})->name('password.reset');
+
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -77,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
 
 
         $totalUsers = User::count();
-        $recentUsers = User::orderBy('dt_of_creation', 'desc')->take(5)->get(); // Assuming 'id' as proxy for 'latest' if timestamps not available or just to be safe
+        $recentUsers = User::orderBy('dt_of_creation', 'desc')->take(6)->get(); // Assuming 'id' as proxy for 'latest' if timestamps not available or just to be safe
 
         return view('dashboard', [
             'accessibleModules' => $accessibleModules,
@@ -114,6 +122,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/admin/module-access/{userId}', [\App\Http\Controllers\AdminModuleAccessController::class, 'update'])
         ->name('admin.module-access.update');
+
+    // Guest User Management Routes
+    Route::resource('/admin/guest-users', \App\Http\Controllers\Admin\GuestUserController::class)
+        ->names('admin.guest-users');
+
+    Route::patch('/admin/guest-users/{id}/toggle-status', [\App\Http\Controllers\Admin\GuestUserController::class, 'toggleStatus'])
+        ->name('admin.guest-users.toggle-status');
 
 
     // System Module Management

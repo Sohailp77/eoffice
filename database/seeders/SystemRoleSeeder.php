@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class SystemRoleSeeder extends Seeder
 {
-    public $targetIds = [1, 100, 103]; // Add any critical user IDs here
+    public $targetIds = [1, 113]; // Add any critical user IDs here
 
     public function run(): void
     {

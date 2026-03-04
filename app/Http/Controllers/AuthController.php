@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
-
 use Illuminate\Support\Facades\Auth;
+use App\Models\GuestUser;
+
 
 class AuthController extends Controller
 {
@@ -22,11 +22,7 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        // Manual authentication for MD5 legacy passwords
-        $user = User::where('username', $request->username)->first();
-
-        if ($user && md5($request->password) === $user->user_password) {
-            Auth::login($user, $request->boolean('remember'));
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
             return redirect()->intended('dashboard');
@@ -45,5 +41,30 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    //Reset password of guest users only, since internal users are managed by LDAP
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'username' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = GuestUser::where('username', $request->username)->first();
+
+        if (!$user) {
+            return back()->withErrors(['username' => 'Password reset is only available for guest users.Please reset your password through the CIS portal.']);
+        }
+
+        //new password cant be curent password
+        if (password_verify($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'New password cannot be the same as the current password.']);
+        }
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->route('login')->with('success', 'Password reset successful. Please login with your new password.');
     }
 }

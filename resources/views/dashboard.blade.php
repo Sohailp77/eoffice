@@ -110,81 +110,121 @@
     <!-- Main Grid Content -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        <!-- Left Column (Users List) -->
+        <!-- Left Column (Users List) Blur for Guest users -->
         <div class="space-y-6">
-            <!-- Team Collaboration -->
-            <div
-                class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100">Latest Users</h3>
-                    @if(auth()->user()->isAdmin())
-                        <a href="{{ route('admin.users.index') }}"
-                            class="text-xs border border-gray-200 dark:border-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300">Manage</a>
-                    @endif
+
+
+            
+<!-- Team Collaboration -->
+<div class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="font-bold text-gray-900 dark:text-gray-100">Latest Users</h3>
+
+        @if(auth()->user()->isAdmin())
+            <a href="{{ route('admin.users.index') }}"
+               class="text-xs border border-gray-200 dark:border-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300">
+                Manage
+            </a>
+        @endif
+    </div>
+
+    {{-- Wrapper so overlay can sit on top --}}
+    <div class="relative">
+
+        {{-- Users List --}}
+        <div class="space-y-5 {{ auth()->user()->userid == null ? 'blur-sm pointer-events-none select-none' : '' }}">
+
+            @foreach($recentUsers as $recentUser)
+                <div class="flex items-center gap-3 group">
+
+                    <div class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 flex items-center justify-center font-bold text-gray-500 dark:text-gray-300 group-hover:border-brand-primary group-hover:text-brand-primary transition-colors">
+                        {{ substr($recentUser->first_name ?? $recentUser->username, 0, 1) }}
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-gray-900 dark:text-gray-200">
+                            {{ $recentUser->full_name ?? $recentUser->username }}
+                        </p>
+
+                        <p class="text-xs text-gray-500 dark:text-gray-400 truncate group-hover:text-brand-primary transition-colors">
+                            {{ $recentUser->email }}
+                        </p>
+                    </div>
+
+                    <span class="text-[10px] bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-light px-2 py-1 rounded">
+                        Active
+                    </span>
+
                 </div>
-                <!-- Real Users -->
-                <div class="space-y-5">
-                    @foreach($recentUsers as $recentUser)
-                        <div class="flex items-center gap-3 group">
-                            <div
-                                class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 flex items-center justify-center font-bold text-gray-500 dark:text-gray-300 group-hover:border-brand-primary group-hover:text-brand-primary transition-colors">
-                                {{ substr($recentUser->first_name ?? $recentUser->username, 0, 1) }}
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-sm font-bold text-gray-900 dark:text-gray-200">
-                                    {{ $recentUser->full_name ?? $recentUser->username }}
-                                </p>
-                                <p
-                                    class="text-xs text-gray-500 dark:text-gray-400 truncate group-hover:text-brand-primary transition-colors">
-                                    {{ $recentUser->email }}
-                                </p>
-                            </div>
-                            <span
-                                class="text-[10px] bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-light px-2 py-1 rounded">Active</span>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+            @endforeach
 
         </div>
 
+        {{-- Guest Overlay --}}
+        @if(auth()->user()->userid == null)
+            <div class="absolute inset-0 flex items-center justify-center">
+  
+            </div>
+        @endif
+
+    </div>
+
+</div>
+
+        </div>
+        
         <!-- Middle Column (Your Apps) - Moved here for better visibility as primary action area -->
-        <div class="space-y-6 lg:col-span-2">
-            <div
-                class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 text-xl">My Parent Modules</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                    @forelse($accesibleparentmodule as $module)
-                        <a href="{{ $module['route'] }}" wire:navigate
-                            class="flex items-start gap-4 p-4 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-brand-primary/30 hover:bg-brand-accent/30 dark:hover:bg-brand-primary/20 transition-all group">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-brand-accent/50 dark:bg-brand-primary/30 flex items-center justify-center text-brand-dark dark:text-brand-light flex-shrink-0 group-hover:scale-110 transition-transform">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4
-                                    class="text-base font-bold text-gray-900 dark:text-gray-200 group-hover:text-brand-dark dark:group-hover:text-brand-light">
-                                    {{ $module['name'] }}
-                                </h4>
-                                <p class="text-xs text-brand-primary dark:text-brand-light font-medium mt-1">
-                                    {{ $module['description'] }}
-                                </p>
-                            </div>
-                        </a>
-                    @empty
-                        <div class="col-span-full py-4 text-center text-gray-400 text-sm italic">
-                            No parent modules assigned.
+<div class="space-y-6 lg:col-span-2">
+    <div
+        class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-gray-900 dark:text-gray-100 text-xl">
+                My Modules
+            </h3>
+        </div>
+
+        <!-- Fixed height container (fits exactly 4 modules) -->
+        <div class="max-h-[9rem] overflow-y-auto pr-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+                @forelse($accesibleparentmodule as $module)
+                    <a href="{{ $module['route'] }}" wire:navigate
+                        class="flex items-start gap-4 p-4 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-brand-primary/30 hover:bg-brand-accent/30 dark:hover:bg-brand-primary/20 transition-all group">
+
+                        <div
+                            class="w-12 h-12 rounded-xl bg-brand-accent/50 dark:bg-brand-primary/30 flex items-center justify-center text-brand-dark dark:text-brand-light flex-shrink-0 group-hover:scale-110 transition-transform">
+
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                </path>
+                            </svg>
                         </div>
-                    @endforelse
-                </div>
+
+                        <div>
+                            <h4
+                                class="text-base font-bold text-gray-900 dark:text-gray-200 group-hover:text-brand-dark dark:group-hover:text-brand-light">
+                                {{ $module['name'] }}
+                            </h4>
+                            <p class="text-xs text-brand-primary dark:text-brand-light font-medium mt-1">
+                                {{ $module['description'] }}
+                            </p>
+                        </div>
+                    </a>
+                @empty
+                    <div class="col-span-full py-4 text-center text-gray-400 text-sm italic">
+                        No parent modules assigned.
+                    </div>
+                @endforelse
 
             </div>
+        </div>
+    </div>
+
 
             <!-- Quick Actions / Promo -->
             <div

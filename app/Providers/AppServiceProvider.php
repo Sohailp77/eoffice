@@ -20,5 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // View Composers are removed in favor of Component logic
+        \Illuminate\Support\Facades\Auth::provider('multi_user', function ($app, array $config) {
+            return new \App\Providers\MultiUserProvider();
+        });
     }
 }

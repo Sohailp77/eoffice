@@ -15,12 +15,12 @@
 
                 @if(isset($crumb['url']) && !$loop->last)
                     <a href="{{ $crumb['url'] }}"
-                        class="text-sm font-medium text-slate-400 dark:text-white hover:text-slate-500 dark:hover:text-slate-500 transition-colors">
+                        class="text-sm font-medium text-slate-500 dark:text-white hover:text-slate-500 dark:hover:text-slate-500 transition-colors">
                         {{ $crumb['label'] }}
                     </a>
                 @else
                     <span
-                        class="text-sm font-medium text-slate-400 {{ !$loop->first ? 'ml-1' : '' }}">{{ $crumb['label'] }}</span>
+                        class="text-sm font-medium dark:text-brand-light text-brand-dark {{ !$loop->first ? 'ml-1' : '' }}">{{ $crumb['label'] }}</span>
                 @endif
             </li>
         @endforeach

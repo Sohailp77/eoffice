@@ -16,9 +16,12 @@
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </span>
-                    <input type="text" placeholder="Search task"
-                        class="w-full pl-10 pr-12 py-2.5 bg-gray-50 text-gray-600 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-brand-primary border-none">
+                    <!-- want this search bar to search in all the modules -->
+                    <input type="text" placeholder="Search task" id="global-search"
+                        class="w-full pl-10 pr-12 py-2.5 bg-gray-50 text-gray-600 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-brand-primary border-none dark:bg-slate-900 dark:border-slate-700 dark:text-white">
                 </div>
+
+
 
                 <div class="flex items-center gap-6 ml-auto">
                     <!-- Theme Selector -->
@@ -119,6 +122,7 @@
             </div>
             <x-ui.error />
             <x-ui.success />
+
         </main>
     </div>
 </x-layout>

@@ -18,6 +18,15 @@
             document.documentElement.classList.remove('dark')
         }
     </script>
+                    <script>
+                    // Immediate Theme Initialization to prevent flash
+                    (function () {
+                        const theme = localStorage.getItem('theme-color');
+                        if (theme && theme !== 'default') {
+                            document.documentElement.setAttribute('data-theme', theme);
+                        }
+                    })();
+                </script>
 </head>
 
 <body class="antialiased min-h-screen">

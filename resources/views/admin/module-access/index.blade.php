@@ -2,15 +2,15 @@
     <x-ui.page-header title="Module Access Management"
         description="Manage user access to modules and set access levels" />
 
-    @if(session('success'))
+    <!-- @if(session('success'))
         <div
             class="mb-6 px-4 py-3 bg-green-500/10 border border-green-500/20 rounded-xl text-green-600 dark:text-green-400">
             {{ session('success') }}
         </div>
-    @endif
+    @endif -->
 
     <!-- Search -->
-    <div class="mb-6">
+    <x-ui.card class="mb-6">
         <form method="GET" action="{{ route('admin.module-access.index') }}" class="flex gap-4">
             <div class="flex-1">
                 <input type="text" name="search" value="{{ request('search') }}"
@@ -30,7 +30,22 @@
                 </x-ui.button>
             @endif
         </form>
-    </div>
+        @if(request('search'))
+            <br>
+            <div class="mt-4">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Showing results for "{{ request('search') }}"
+                </p>
+            </div>
+        @endif
+
+        <!-- clear search button -->
+        @if(request('search'))
+            <div class="mt-4">
+                <x-ui.button tag="a" href="{{ route('admin.module-access.index') }}" variant="secondary">Clear Search</x-ui.button>
+            </div>
+        @endif
+    </x-ui.card>
 
     <!-- Users Table -->
     <x-ui.table>

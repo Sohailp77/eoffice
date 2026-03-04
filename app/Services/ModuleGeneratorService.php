@@ -68,16 +68,15 @@ class ModuleGeneratorService
                 <a href="{{ route('{$slug}.' . \$sub->slug . '.index') }}" 
                    class="group block p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-brand-primary/50 dark:hover:border-brand-primary/50 transition-all duration-300 shadow-sm hover:shadow-md relative overflow-hidden">
                     
-                    <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-light/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-primary transition-colors relative z-10">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-light transition-colors relative z-10">
                         {{ \$sub->name }}
                     </h3>
                     <p class="text-gray-500 dark:text-gray-400 text-sm relative z-10">
                         Manage {{ \$sub->name }} records
                     </p>
-                    
-                    <div class="mt-4 flex items-center text-sm text-brand-primary font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                    <div class="mt-4 flex items-center text-sm text-brand-light font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                         <span>Access Module</span>
                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -197,9 +196,14 @@ PHP;
         $this->createSubModuleViews($modulePath, $subName, $subSlug, $parentSlug);
 
         // 4. Migration
-        $this->createSubModuleMigration($modulePath, $subSlug, $parentSlug);
+        $migrationFile = $this->createSubModuleMigration($modulePath, $subSlug, $parentSlug);
 
-        // 5. Route
+        // 5. Run Migration immediately
+        Artisan::call('migrate', [
+            '--path' => str_replace(base_path() . '/', '', $migrationFile)
+        ]);
+
+        // 6. Route
         $this->appendSubModuleRoute($parentSlug, $subSlug, $controllerName);
 
         Artisan::call('route:clear');
@@ -207,7 +211,7 @@ PHP;
 
     protected function createSubModuleModel($path, $namespace, $modelName, $subSlug)
     {
-        $table = Str::snake($namespace) . '_' . Str::snake($subSlug); // e.g. library_books
+        $table = 'periphery.' . Str::snake($namespace) . '_' . Str::snake($subSlug); // e.g. periphery.library_books
 
         $content = <<<PHP
 <?php
@@ -521,9 +525,10 @@ HTML
 
     protected function createSubModuleMigration($path, $subSlug, $parentSlug)
     {
-        $table = Str::snake($parentSlug) . '_' . Str::snake($subSlug);
+        $tableWithoutSchema = Str::snake($parentSlug) . '_' . Str::snake($subSlug);
+        $table = 'periphery.' . $tableWithoutSchema;
         $timestamp = date('Y_m_d_His');
-        $className = 'Create' . Str::studly($table) . 'Table';
+        $className = 'Create' . Str::studly($tableWithoutSchema) . 'Table';
 
         $content = <<<PHP
 <?php
@@ -551,7 +556,10 @@ return new class extends Migration
     }
 };
 PHP;
-        File::put("{$path}/Database/Migrations/{$timestamp}_create_{$table}_table.php", $content);
+        $migrationPath = "{$path}/Database/Migrations/{$timestamp}_create_{$tableWithoutSchema}_table.php";
+        File::put($migrationPath, $content);
+        
+        return $migrationPath;
     }
 
     public function appendSubModuleRoute(string $parentSlug, string $subSlug, string $controllerName)
@@ -623,7 +631,7 @@ PHP;
         $this->removeSubModuleRoute($parentSlug, $subSlug);
 
         // 6. Drop Table
-        $table = Str::snake($parentSlug) . '_' . Str::snake($subSlug);
+        $table = 'periphery.' . Str::snake($parentSlug) . '_' . Str::snake($subSlug);
         Schema::dropIfExists($table);
 
         Artisan::call('route:clear');

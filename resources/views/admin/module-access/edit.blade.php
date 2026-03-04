@@ -26,7 +26,7 @@
                 </div>
                 <div>
                     <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">User ID</p>
-                    <p class="text-gray-900 dark:text-white font-mono font-medium">#{{ $user->userid }}</p>
+                    <p class="text-gray-900 dark:text-white font-mono font-medium">#{{ $user->userid ?? $user->id }}</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -53,7 +53,7 @@
     </x-ui.card>
 
     <!-- Module Access Form -->
-    <form method="POST" action="{{ route('admin.module-access.update', $user->userid) }}">
+    <form method="POST" action="{{ route('admin.module-access.update', $user->userid ?? $user->id) }}">
         @csrf
 
         <x-ui.card>

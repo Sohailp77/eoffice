@@ -1,3 +1,5 @@
+{{--same as login page but with different title and form action--}}
+
 <x-layout>
 
     <div class="bg-brand-canvas min-h-screen flex items-center justify-center p-4 md:p-6 font-sans">
@@ -15,10 +17,9 @@
                         <div class="w-24 h-1.5 bg-brand-light rounded-full absolute top-[11.5rem] left-0 -z-10 transform -rotate-2 opacity-80"></div>
                         
                         <h1 class="text-4xl lg:text-[42px] font-bold leading-[1.15] mb-6 tracking-tight">
-                            Simplify<br>
-                            management and<br>
-                            office work with<br>
-                            eOffice.
+                            Reset Your Password<br>
+                            Secure Your Account<br>
+                            Regain Access with Ease.
                         </h1>
                         <p class="text-brand-accent text-sm leading-relaxed max-w-xs font-medium opacity-90">
                             Streamline your administrative workflows and boost productivity with our centralized dashboard.
@@ -47,14 +48,14 @@
                     </div>
 
                     <div class="text-center mb-10">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-brand-light mb-2">Welcome Back</h2>
-                        <p class="text-gray-400 text-sm">Please login to access your workspace</p>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-brand-light mb-2">Reset Your Password</h2>
+                        <p class="text-gray-400 text-sm">Please enter your new password below</p>
                     </div>
 
                     <x-ui.error />
                     <x-ui.success />
 
-                    <form method="POST" action="{{ route('login') }}" class="space-y-5">
+                    <form method="POST" action="{{ route('password.update') }}" class="space-y-5">
                     @csrf
 
                         <div class="space-y-1">
@@ -80,6 +81,7 @@
                                     autocomplete="current-password"
                                     class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-medium text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-light/50 focus:border-brand-primary transition-all shadow-sm"
                                 >
+                                
                                 <button 
                                     type="button" 
                                     @click="show = !show"
@@ -93,17 +95,32 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </button>
+
+
+
                             </div>
                         </div>
 
+                        <div class="mt-4">
+                            <label class="text-xs font-semibold text-gray-500 ml-3 uppercase tracking-wider">Confirm Password</label>
+                            <input 
+                                type="password" 
+                                name="password_confirmation" 
+                                placeholder="••••••••" 
+                                required
+                                autocomplete="new-password"
+                                class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-medium text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-light/50 focus:border-brand-primary transition-all shadow-sm"
+                            >
+                        </div>
+
                         <div class="flex justify-end pt-1">
-                            <a href="{{ route('password.reset') }}" class="text-xs font-semibold text-gray-400 hover:text-brand-primary transition-colors">
+                            {{-- <a href="#" class="text-xs font-semibold text-gray-400 hover:text-brand-primary transition-colors">
                                 Forgot password?
-                            </a>
+                            </a> --}}
                         </div>
 
                         <button type="submit" class="w-full py-4 bg-brand-dark text-white rounded-2xl font-bold text-sm shadow-lg shadow-brand-dark/30 hover:bg-brand-primary hover:shadow-brand-primary/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 border border-transparent">
-                            Login to eOffice
+                            Reset Password
                         </button>
                     </form>
 
@@ -117,10 +134,10 @@
                     </div>
 
                     <div class="mt-2 text-center">
-                        {{-- <p class="text-sm text-gray-400">
-                            Don't have an account? 
-                            <a href="#" class="text-brand-primary font-bold hover:text-brand-dark hover:underline transition-all">Request Access</a>
-                        </p> --}}
+                        <p class="text-sm text-gray-400">
+                            Remembered your password?
+                            <a href="{{ route('login') }}" class="text-brand-primary font-bold hover:text-brand-dark hover:underline transition-all">Login here</a>
+                        </p>
                     </div>
                 </div>
             </div>

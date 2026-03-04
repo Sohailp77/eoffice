@@ -86,19 +86,24 @@
                         </x-ui.button>
                     </div>
                     <div
-                        class="flex items-start gap-2 text-xs text-gray-500 dark:text-gray-400 bg-brand-primary/5 dark:bg-brand-primary/10 p-2 rounded text-brand-primary dark:text-brand-light">
+                        class="flex items-start gap-2 text-xs text-brand-primary dark:text-brand-light bg-brand-primary/5 dark:bg-brand-primary/10 p-2 rounded text-brand-primary dark:text-brand-light">
                         <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <p>Creates DB entry. Run <code>php artisan migrate</code> to create default table of sub-module.
-                        </p>
+<p class="text-brand-primary dark:text-brand-light">
+    The database table and all required files will be automatically generated, including a basic CRUD sub-module located at 
+    <code>app/Modules/{{ \Illuminate\Support\Str::studly($module->slug) }}</code>. 
+    The module comes with built-in <code>BROWSE,READ,WRITE</code> and <code>MANAGE</code> access control. 
+    Simply assign a developer to begin building features immediately. 
+    Once development is complete, the module can be assigned to users.
+</p>                        </p>
                     </div>
                 </div>
             </form>
 
             <!-- Sub-Modules List -->
-            <div class="space-y-3">
+            <div class="space-y-3 max-h-[400px] overflow-y-auto pr-1">
                 @forelse($subModules as $sub)
                     <div
                         class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:border-brand-primary/30 transition-colors">

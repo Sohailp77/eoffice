@@ -5,17 +5,35 @@
     <x-ui.card class="mb-6">
         <form action="{{ route('admin.users.index') }}" method="GET" class="flex gap-4">
             <div class="relative flex-1">
-                <input type="text" name="search" placeholder="Search by username, email, name..."
+                <input type="text" name="search" 
                     value="{{ request('search') }}"
-                    class="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white ring-1 ring-brand-primary focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary/50 outline-none transition-all placeholder:text-slate-500">
-                <svg class="w-5 h-5 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                    placeholder="Search by username, email, or name..."
+                    class="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none ring-1 ring-brand-primary focus:ring-2 focus:ring-brand/50 focus:border-brand-primary/50 outline-none transition-all shadow-sm" />                
             </div>
-            <x-ui.button type="submit" variant="primary">Search</x-ui.button>
+            <x-ui.button type="submit" variant="primary">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                Search
+            </x-ui.button>
         </form>
+
+        @if(request('search'))
+            <br>
+            <div class="mt-4">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Showing results for "{{ request('search') }}"
+                </p>
+            </div>
+        @endif
+
+        <!-- clear search button -->
+        @if(request('search'))
+            <div class="mt-4">
+                <x-ui.button tag="a" href="{{ route('admin.users.index') }}" variant="secondary">Clear Search</x-ui.button>
+            </div>
+        @endif
     </x-ui.card>
     <x-ui.table>
         <x-slot:header>
